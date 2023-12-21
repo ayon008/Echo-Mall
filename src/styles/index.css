@@ -1,0 +1,48 @@
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display&family=Source+Code+Pro&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply bg-slate-50;
+}
+
+/* *<===dark light background===>* */
+.light-background {
+  @apply bg-gradient-to-r from-[#e5f7f4] via-[#daeff3] to-[#efffff];
+}
+
+.dark-background {
+  @apply dark:bg-gradient-to-br dark:from-slate-800 dark:to-indigo-800;
+}
+
+.myContainer {
+  @apply w-full max-w-[1320px] mx-auto px-2;
+}
+
+.swiper-button-prev {
+  @apply after:text-primaryColor1/80;
+}
+.swiper-button-next {
+  @apply after:text-primaryColor1/80;
+}
+
+*{
+  font-family: 'Josefin Sans', sans-serif;
+}
+
+
+*{
+  /* Hide the vertical scrollbar */
+  ::-webkit-scrollbar {
+      width: 0;
+      background: transparent;
+    }
+  }
+
+
+.rounded-full-ex{
+  width: 40px;
+  height: 20px;
+  border-radius: 100%;
+}

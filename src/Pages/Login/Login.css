@@ -1,0 +1,6 @@
+.login-wrapper{
+    background-image: url('https://tailwindcss.com/_next/static/media/hero@75.b2469a49.jpg');
+    background-size: cover;    
+    background-position: center;
+    width: 100%;
+}
