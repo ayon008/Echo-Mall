@@ -1,11 +1,44 @@
-import React from 'react'
+import React, { useContext, useState } from 'react'
 import { Link, useLoaderData } from 'react-router-dom'
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from 'react-responsive-carousel';
+import useAxiosSecure from '../../Hooks/useAxiosSecure';
+import { AuthContext } from '../../Contexts/AuthProvider';
+import Loader from '../Loader/Loader';
+import Swal from 'sweetalert2';
 
 const Chackout = () => {
   const data = useLoaderData();
   const { _id, Product_Name, Description, Brand_Name, Product_Code, Price, Price_Without_Discount, Available_Size, Color_Variants, Commission, Product_Description, Doc_1_PC, Doc_2_PC, Doc_3_PC } = data;
+  const axiosSecure = useAxiosSecure();
+  const { user } = useContext(AuthContext);
+
+  const [loading, setLoading] = useState(false);
+  if (loading) {
+    return (
+      <Loader />
+    )
+  }
+
+  const handleAddToCart = () => {
+    setLoading(true);
+    axiosSecure.post('/ProductAddToCart', { ...data, email: user?.email })
+      .then(response => {
+        console.log(response);
+        if (response.data.insertedId || response.data.modifiedCount) {
+          setLoading(false);
+          Swal.fire({
+            position: "Center",
+            icon: "success",
+            title: "SuccessFully Added",
+            showConfirmButton: false,
+            timer: 1500
+          });
+        }
+      })
+  }
+
+
   return (
     <section className='md:max-w-[1220px] mx-auto px-3 md:px-0'>
       <section className='flex justify-center pt-6'>
@@ -53,7 +86,7 @@ const Chackout = () => {
 
             <div className='flex gap-x-3 pt-6'>
               <Link to={`/shipping/${_id}`}><button className='text-white bg-[#2abbe8] md:px-[87px] px-[29px] md:py-[9.5px] py-[8px] rounded-[1.8px] hover:scale-105 duration-50000 transition-all'>Buy Now</button></Link>
-              <button className='text-white bg-[#f57224] md:px-[87px] px-[22px] md:py-[9.5px] py-[8px] rounded-[1.8px] hover:scale-105 duration-50000 transition-all'>Add To Cart</button>
+              <button onClick={handleAddToCart} className='text-white bg-[#f57224] md:px-[87px] px-[22px] md:py-[9.5px] py-[8px] rounded-[1.8px] hover:scale-105 duration-50000 transition-all'>Add To Cart</button>
             </div>
           </div>
         </div>

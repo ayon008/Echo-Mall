@@ -1,16 +1,17 @@
 import { useContext, useState } from "react";
 import { Fade } from "react-awesome-reveal";
 import { useForm } from "react-hook-form";
-import { FaArrowRight, FaEye, FaEyeSlash } from "react-icons/fa";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { HiArrowLongRight } from "react-icons/hi2";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./Login.css";
 import { AuthContext } from "../../Contexts/AuthProvider";
 import Swal from "sweetalert2";
+import { FaFacebook, FaGoogle } from "react-icons/fa6";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const { signIn } = useContext(AuthContext);
+  const { signIn, signInWithGoogle } = useContext(AuthContext);
   const navigate = useNavigate();
   const {
     register,
@@ -18,6 +19,18 @@ const Login = () => {
     formState: { errors },
     reset,
   } = useForm();
+
+  const handleGoogleLogin = () => {
+    signInWithGoogle()
+      .then(result => {
+        const user = result.user;
+        console.log(user);
+        navigate("/");
+      })
+      .catch(error => {
+        console.log(error.message);
+      })
+  }
 
   const onSubmit = async (data) => {
     const { email, password } = data;
@@ -95,6 +108,17 @@ const Login = () => {
                   >
                     Login
                   </button>
+                </div>
+                {/* OR */}
+                <div className="text-center">
+                  <div>
+                    <p>OR</p>
+                  </div>
+                  {/* Google Login */}
+                  <div className="flex items-center gap-2 justify-center my-6">
+                    <p>Login With</p>
+                    <FaGoogle className="cursor-pointer" onClick={handleGoogleLogin} size={'2rem'} />
+                  </div>
                 </div>
                 {/* link to register page */}
                 <div className="flex items-center justify-center gap-x-5">

@@ -1,10 +1,9 @@
-import React, { useState } from 'react'
-import { useLoaderData } from 'react-router-dom';
-import Swal from 'sweetalert2';
+import { useState } from "react";
+import useCart from "../../Hooks/useCart";
 
-const Buy_Now = () => {
-    const data = useLoaderData();
-    const { _id, Product_Name, Description, Brand_Name, Product_Code, Price, Price_Without_Discount, Available_Size, Color_Variants, Commission, Product_Description, Doc_1_PC, Doc_2_PC, Doc_3_PC} = data;
+const Buy_All = () => {
+    const { cart } = useCart();
+    const total = cart.reduce((sum, cartItem) => sum + parseFloat(cartItem.Price) * parseInt(cartItem.quantity), 0);
     const [charge, setCharge] = useState(60);
     console.log(charge);
     const handleChange = (event) => {
@@ -16,8 +15,6 @@ const Buy_Now = () => {
         }
     };
 
-
-    console.log(data);
     const Handle_Adds = () => {
         Swal.fire({
             title: "Conformed!",
@@ -57,24 +54,33 @@ const Buy_Now = () => {
                     </section>
                     <section className='md:w-[50%] bg-white md:p-4 md:pt-0 py-4 md:py-0'>
                         <p className='text-[18px] text-center md:text-left mt-10'>Your Order</p>
-                        <div className='flex justify-between items-center pt-5 md:gap-x-4 gap-x-2'>
-                            <div className='w-[20%]'><img className='w-[90px] h-[60px] md:w-[80px] md:h-[80px] rounded-[2px]' src={Doc_1_PC} alt="" /></div>
-                            <div className='w-[70%] font-serif text-[10.5px] md:text-[14px]'>{Product_Name}</div>
-                            <div className='w-[10%] text-right'><p>TK</p> <p>{Price}</p></div>
-                        </div>
-                        <hr className='mt-3 border-t-2' />
+                        {
+                            cart?.map(cartItem => {
+                                const { _id, Product_Name, Description, Brand_Name, Product_Code, Price, Price_Without_Discount, Available_Size, Color_Variants, Commission, Product_Description, Doc_1_PC, Doc_2_PC, Doc_3_PC, quantity } = cartItem;
+                                return (
+                                    <>
+                                        <div className='flex justify-between items-center pt-5 md:gap-x-4 gap-x-2'>
+                                            <div className='w-[20%]'><img className='w-[90px] h-[60px] md:w-[80px] md:h-[80px] rounded-[2px]' src={Doc_1_PC} alt="" /></div>
+                                            <div className='w-[70%] font-serif text-[10.5px] md:text-[14px]'>{Product_Name}</div>
+                                            <div className='w-[10%] text-right'><p>TK</p> <p>{Price} * {quantity} = {Price * quantity}</p></div>
+                                        </div>
+                                        <hr className='mt-3 border-t-2' />
+                                    </>
+                                )
+                            })
+                        }
                         <div className='flex gap-y-2 flex-col mt-10'>
                             <div className='flex justify-between'>
                                 <p className='font-bold'>Total:</p>
-                                <p className='font-bold'><span className='font-semibold'>TK</span> {Price}</p>
+                                <p className='font-bold'><span className='font-semibold'>TK</span> {total}</p>
                             </div>
                             <div className='flex justify-between'>
                                 <p className='font-bold'>Delivery charge:</p>
-                                <p className='font-bold text-orange-600'><span className='font-semibold'>TK</span> {charge}</p>
+                                <p className='font-bold text-orange-600'><span className='font-semibold'>TK</span> 60</p>
                             </div>
                             <div className='flex justify-between'>
                                 <p className='font-bold text-[18px]'>Total:</p>
-                                <p className='font-bold text-[19.2px]'>TK {Price + charge}</p>
+                                <p className='font-bold text-[19.2px]'>TK {total + 60}</p>
                             </div>
                         </div>
                     </section>
@@ -82,6 +88,6 @@ const Buy_Now = () => {
             </form>
         </div>
     )
-}
+};
 
-export default Buy_Now
+export default Buy_All;

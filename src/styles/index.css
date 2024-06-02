@@ -23,26 +23,51 @@ body {
 .swiper-button-prev {
   @apply after:text-primaryColor1/80;
 }
+
 .swiper-button-next {
   @apply after:text-primaryColor1/80;
 }
 
-*{
+* {
   font-family: 'Josefin Sans', sans-serif;
 }
 
+::-webkit-scrollbar {
+  width: 12px;
+  /* Width of the vertical scrollbar */
+  height: 12px;
+  /* Height of the horizontal scrollbar */
+  background-color: white !important;
+  margin-top: 40px;
+}
 
-*{
-  /* Hide the vertical scrollbar */
-  ::-webkit-scrollbar {
-      width: 0;
-      background: transparent;
-    }
-  }
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
 
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
 
-.rounded-full-ex{
+html {
+  scrollbar-width: thin;
+  /* Can be auto, thin, or none */
+  scrollbar-color: #888 #f1f1f1;
+  /* thumb color track color */
+}
+
+.rounded-full-ex {
   width: 40px;
   height: 20px;
   border-radius: 100%;
+}
+
+.grid-cols-custom {
+  grid-template-columns: 1fr 3fr 1fr 1fr;
+  align-items: center;
+}
+
+.grid-cols-custom-2 {
+  grid-template-columns: 3fr 1fr;
 }

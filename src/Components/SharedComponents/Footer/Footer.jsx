@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import happy_Shopping from '../../../assets/happy_Shopping.png'
 
 const Footer = () => {
@@ -12,13 +11,12 @@ const Footer = () => {
 
             <div className=" text-[14.5px] md:text-normal space-y-2">
               <p className="flex items-center gap-2">
-                +880 1821-011131
+                +880 1726108060</p>
+              <p className="flex items-center gap-2">
+                shariar.ayon128@gmail.com
               </p>
               <p className="flex items-center gap-2">
-                sohelrana2023@gmail.com
-              </p>
-              <p className="flex items-center gap-2">
-                Sonargaon, Narayanganj, Dhaka, Bangladesh
+                Gopalganj, Dhaka, Bangladesh
               </p>
             </div>
           </div>
@@ -27,7 +25,7 @@ const Footer = () => {
             <h2 className="text-2xl font-semibold">Follow Us</h2>
 
             <div className="flex gap-x-3">
-              <div className='cursor-pointer hover:scale-110 transition-all duration-300'><AntDesignFacebookFilled /></div>
+              <div className='cursor-pointer hover:scale-110 transition-all duration-300'><a href="https://www.facebook.com/shariar.oyon/"><AntDesignFacebookFilled /></a></div>
               <div className='cursor-pointer hover:scale-110 transition-all duration-300'><MdiWeb /></div>
               <div className='cursor-pointer hover:scale-110 transition-all duration-300'><BiYoutube /></div>
               <div className='cursor-pointer hover:scale-110 transition-all duration-300'><RiTwitterXLine /></div>
@@ -37,7 +35,7 @@ const Footer = () => {
           </div>
         </div>
 
-        <p className="text-[13px] md:text-normal text-center font-semibold  py-3 mt-3"> &copy; {new Date().getFullYear()} copy rights. All right reserved by<span className="font-bold text-[#f85606]"> Sohel Rana</span></p>
+        <p className="text-[13px] md:text-normal text-center font-semibold  py-3 mt-3"> &copy; {new Date().getFullYear()} copy rights. All right reserved by<span className="font-bold text-[#f85606]"> Shariar Ayon</span></p>
       </div>
     </>
   )

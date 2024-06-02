@@ -1,8 +1,10 @@
 import { IoShieldCheckmarkSharp } from "react-icons/io5";
 import { FaTruckFast } from "react-icons/fa6";
 import { IoIosPricetag, IoIosCheckmarkCircle } from "react-icons/io";
+import Marquee from "react-fast-marquee";
 
 const serviceGuar = [
+  // TO DO BACKEND
   {
     title: "save payments",
     icon: IoShieldCheckmarkSharp,
@@ -28,20 +30,24 @@ const serviceGuar = [
     icon: AntDesignFireFilled,
   },
 ];
+
+
 const ServiceGuearanty = () => {
   return (
     <div>
       <div className="hidden md:block">
         <div className="bg-primaryColorLight flex justify-between gap-3 flex-wrap py-2 px-[50px] rounded-md">
-          {serviceGuar.map((service) => {
-            const { title, icon: Icon } = service;
-            return (
-              <div className="flex items-center gap-1">
-                <Icon className="text-2xl  text-primaryColor1" />
-                <h3 className="text-[16px] font-semibold">{title}</h3>
-              </div>
-            );
-          })}
+          <Marquee autoFill={true}>
+            {serviceGuar.map((service, i) => {
+              const { title, icon: Icon } = service;
+              return (
+                <div className="flex items-center gap-16" key={i}>
+                  <Icon className="text-2xl  text-primaryColor1" />
+                  <h3 className="text-[16px] font-semibold">{title}</h3>
+                </div>
+              );
+            })}
+          </Marquee>
         </div>
       </div>
       <div className="md:hidden mx-1">

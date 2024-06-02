@@ -10,12 +10,15 @@ import Register from "../../Pages/Register/Register";
 import Chackout from "../../Components/Chackout/Chackout";
 import Buy_Now from "../../Components/Buy_Now/Buy_Now";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
+import Products from "../../Pages/Products/Products";
+import AddToCart from "../../Components/AddToCart/AddToCart";
+import Buy_All from "../../Components/Buy_Now/Buy_All";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <MainPage />,
-    errorElement: <ErrorPage />,
+    // errorElement: <ErrorPage />,
     children: [
       {
         path: "/",
@@ -49,6 +52,19 @@ export const router = createBrowserRouter([
         element: <Buy_Now></Buy_Now>,
         loader: ({ params }) => fetch(`${import.meta.env.VITE_DataHost}/data/${params._id}`)
       },
+      {
+        path: "/shipping",
+        element: <Buy_All />
+      },
+      {
+        path: '/products/:category',
+        element: <Products></Products>,
+        loader: ({ params }) => fetch(`${import.meta.env.VITE_DataHost}/products/${params.category}`)
+      },
+      {
+        path: '/addToCart',
+        element: <PrivateRoute><AddToCart /></PrivateRoute>,
+      }
     ],
   },
   {

@@ -6,7 +6,7 @@ const Menu = () => {
       <ul className="flex items-center  gap-2">
         <li className="relative group">
           <span className="text-xl font-semibold text-white cursor-pointer">
-            Cosmetics
+            Echo
           </span>
           {/* submenu  */}
           <div className="hidden absolute top-6 w-max bg-white  drop-shadow-md p-5 rounded-md group-hover:grid  group-hover:transition-all group-hover:duration-300 items-center grid-cols-5 gap-14 ">
@@ -103,7 +103,7 @@ const Menu = () => {
         </li>
         <li className="relative group">
           <span className="text-xl font-semibold text-white cursor-pointer">
-            Cloths
+            Mall
           </span>
           {/* submenu  */}
           <div className="hidden absolute top-6  w-max bg-white  drop-shadow-md p-5 rounded-md group-hover:grid items-center grid-cols-5 gap-14 ">

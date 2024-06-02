@@ -1,13 +1,14 @@
 import React, { useContext, useState } from "react";
 import logo from "../../../assets/Logos.png";
-import logo_M from "../../../assets/Mobile_Logo.png";
+import logo_M from "../../../assets/logo(152).png";
 import { CiSearch } from "react-icons/ci";
-import { FaRegUser } from "react-icons/fa";
+import { FaRegUser, FaShoppingCart } from "react-icons/fa";
 import { FiShoppingCart } from "react-icons/fi";
 import Menu from "./Menu";
 import Searchbar from "./Searchbar";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../Contexts/AuthProvider";
+import '../../SharedComponents/Header/Header.css'
 
 const Header = () => {
   const { user, logOut } = useContext(AuthContext);
@@ -17,16 +18,20 @@ const Header = () => {
     logOut();
   };
 
+  const navigate = useNavigate();
+
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
+
+  // TO DO HOVER TIME
 
   return (
     <>
       <div className=" flex items-center md:hidden justify-between px-3">
         <Link to="/">
           <div className="">
-            <img src={logo_M} alt="logo" className="w-[35px] h-[25px]" />
+            <img src={logo} alt="logo" className="w-[35px] h-[25px]" />
           </div>
         </Link>
         <div>
@@ -83,6 +88,7 @@ const Header = () => {
           )}
         </div>
       </div>
+      {/* TO DO */}
       {/* navbar  */}
       <nav className="bg-primaryColor2 w-full py-4 sticky top-0 left-0 hidden  z-30  md:block">
         <div className="myContainer">
@@ -111,14 +117,25 @@ const Header = () => {
             {/* profile */}
             <div className="flex items-center gap-2 font-semibold text-whiteText  capitalize ">
               {user ? (
-                <div className="flex justify-center items-center gap-2">
-                  <button onClick={handleLogOut}>Logout</button>
-                  <img
-                    src={user.photoURL}
-                    alt=""
-                    width={25}
-                    className="rounded-full"
-                  />
+                <div className="relative user">
+                  <div className="flex justify-center items-center gap-2 hover:bg-orange-700 duration-200 p-1 rounded">
+                    <img
+                      src={user.photoURL}
+                      alt=""
+                      width={25}
+                      className="rounded-full"
+                    />
+                    <div>
+                      <p className="text-[8px]">Hello,{user?.displayName.length > 20 ? user?.displayName.slice(0, 20) + '...' : user?.displayName}</p>
+                      <p className="text-[12px]">Orders & Accounts</p>
+                    </div>
+                  </div>
+                  <ul tabIndex={0} className="dropdown-content opacity-0 hidden absolute z-[1] right-0 menu p-2 shadow bg-white rounded-box w-52 text-gray-500">
+                    <li className="hover:text-orange-600 hover:underline"><Link to="/addToCart">My Order</Link></li>
+                    <li className="hover:text-orange-600 hover:underline"><Link>My Order</Link></li>
+                    <li className="hover:text-orange-600 hover:underline"><Link>My Order</Link></li>
+                    <li className="hover:text-orange-600 hover:underline"><button onClick={handleLogOut}>Logout</button></li>
+                  </ul>
                 </div>
               ) : (
                 <div className="flex justify-center items-center">
@@ -142,7 +159,7 @@ const Header = () => {
               )}
 
               {/* cart  */}
-              <FiShoppingCart className="text-4xl  text-whiteText hover:bg-black/10  cursor-pointer p-2 rounded-md" />
+              <FiShoppingCart onClick={() => navigate('/addToCart')} className="text-4xl  text-whiteText hover:bg-black/10  cursor-pointer p-2 rounded-md" />
             </div>
           </div>
         </div>
