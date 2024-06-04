@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import logo from "../../../assets/Logos.png";
 import logo_M from "../../../assets/logo(152).png";
 import { CiSearch } from "react-icons/ci";
@@ -9,10 +9,13 @@ import Searchbar from "./Searchbar";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../Contexts/AuthProvider";
 import '../../SharedComponents/Header/Header.css'
+import useAxiosPublic from "../../../Hooks/useAxiosPublic";
+import { set } from "firebase/database";
 
 const Header = () => {
   const { user, logOut } = useContext(AuthContext);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const axiosPublic = useAxiosPublic();
 
   const handleLogOut = () => {
     logOut();
@@ -24,7 +27,28 @@ const Header = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
-  // TO DO HOVER TIME
+  const [searchData, setSearchData] = useState([]);
+  const [queryValues, setQueryValues] = useState("");
+  const [isShown, setIsShown] = useState(false);
+
+  const handleSearch = (event) => {
+    const query = event.target.value;
+    setIsShown(true);
+    setQueryValues(query);
+  };
+
+  useEffect(() => {
+    axiosPublic.get(`/suggestions?search=${queryValues}`)
+      .then(response => {
+        setSearchData(response.data);
+      })
+  }, [queryValues])
+
+  const handleOnclick = id => {
+    navigate(`/Chackout/${id}`)
+    setIsShown(false)
+  }
+
 
   return (
     <>
@@ -88,7 +112,7 @@ const Header = () => {
           )}
         </div>
       </div>
-      {/* TO DO */}
+      {/* TO DO HIDE UL */}
       {/* navbar  */}
       <nav className="bg-primaryColor2 w-full py-4 sticky top-0 left-0 hidden  z-30  md:block">
         <div className="myContainer">
@@ -106,13 +130,23 @@ const Header = () => {
             </div>
 
             {/* search bar  */}
-            <div className=" bg-white rounded-md px-2 py-[.35rem] flex items-center flex-1">
+            <div className="relative bg-white rounded-md px-2 py-[.35rem] flex items-center flex-1">
               <input
+                onChange={handleSearch}
                 type="text"
-                placeholder="Search here"
+                placeholder="Search here..."
                 className=" border-none outline-none w-full h-full"
               />
               <CiSearch className="cursor-pointer text-primaryColor1 text-lg bg-primaryColorLight w-7 h-7 rounded-full p-1 font-bold" />
+              {
+                isShown && searchData.length > 0 && <ul tabIndex={0} className="dropdown-content absolute top-10 z-[1] menu p-2 shadow bg-base-100 rounded-box">
+                  {searchData.slice(0, 10)?.map(data => {
+                    return (
+                      <li key={data._id} onClick={() => handleOnclick(data._id)} className="p-2 cursor-pointer hover:text-orange-600">{data.Product_Name}</li>
+                    )
+                  })}
+                </ul>
+              }
             </div>
             {/* profile */}
             <div className="flex items-center gap-2 font-semibold text-whiteText  capitalize ">
@@ -132,7 +166,7 @@ const Header = () => {
                   </div>
                   <ul tabIndex={0} className="dropdown-content opacity-0 hidden absolute z-[1] right-0 menu p-2 shadow bg-white rounded-box w-52 text-gray-500">
                     <li className="hover:text-orange-600 hover:underline"><Link to="/addToCart">My Order</Link></li>
-                    <li className="hover:text-orange-600 hover:underline"><Link>My Order</Link></li>
+                    <li className="hover:text-orange-600 hover:underline"><Link to="/myAccount">My Account</Link></li>
                     <li className="hover:text-orange-600 hover:underline"><Link>My Order</Link></li>
                     <li className="hover:text-orange-600 hover:underline"><button onClick={handleLogOut}>Logout</button></li>
                   </ul>

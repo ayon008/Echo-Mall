@@ -13,6 +13,7 @@ import PrivateRoute from "../PrivateRoute/PrivateRoute";
 import Products from "../../Pages/Products/Products";
 import AddToCart from "../../Components/AddToCart/AddToCart";
 import Buy_All from "../../Components/Buy_Now/Buy_All";
+import MyAccount from "../../Components/MyAccount/MyAccount";
 
 export const router = createBrowserRouter([
   {
@@ -64,6 +65,10 @@ export const router = createBrowserRouter([
       {
         path: '/addToCart',
         element: <PrivateRoute><AddToCart /></PrivateRoute>,
+      },
+      {
+        path: '/myAccount',
+        element: <PrivateRoute><MyAccount /></PrivateRoute>
       }
     ],
   },

@@ -18,7 +18,7 @@ const AddToCart = () => {
     const deleteCart = () => {
         axiosSecure.delete('/ProductAddToCart')
             .then(response => {
-                console.log(response.data);
+                console.log(response.data.deletedCount);
                 refetch();
                 Swal.fire({
                     position: "Center",

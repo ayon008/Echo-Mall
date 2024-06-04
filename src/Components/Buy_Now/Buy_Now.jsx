@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
-import { useLoaderData } from 'react-router-dom';
+import { Link, useLoaderData } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import useAccountInfo from '../../Hooks/useAccountInfo';
+import Loader from '../Loader/Loader';
 
 const Buy_Now = () => {
     const data = useLoaderData();
-    const { _id, Product_Name, Description, Brand_Name, Product_Code, Price, Price_Without_Discount, Available_Size, Color_Variants, Commission, Product_Description, Doc_1_PC, Doc_2_PC, Doc_3_PC} = data;
+    const { _id, Product_Name, Description, Brand_Name, Product_Code, Price, Price_Without_Discount, Available_Size, Color_Variants, Commission, Product_Description, Doc_1_PC, Doc_2_PC, Doc_3_PC } = data;
     const [charge, setCharge] = useState(60);
     console.log(charge);
     const handleChange = (event) => {
@@ -15,9 +17,9 @@ const Buy_Now = () => {
             setCharge(120);
         }
     };
+    const { userDetails, isLoading } = useAccountInfo();
+    
 
-
-    console.log(data);
     const Handle_Adds = () => {
         Swal.fire({
             title: "Conformed!",
@@ -25,6 +27,11 @@ const Buy_Now = () => {
             icon: "success"
         });
     }
+
+    if (isLoading) {
+        return <Loader />
+    }
+
     return (
         <div className='md:max-w-[1220px] mx-auto px-2 md:px-0 pt-5 md:pt-0'>
             <form onSubmit={Handle_Adds}>
@@ -34,25 +41,25 @@ const Buy_Now = () => {
                         <section className='flex flex-col gap-y-4'>
                             <div>
                                 <p className='pl-[5px]'>Your Name</p>
-                                <input className='w-full outline-none border-[1.2px] border-[#ced4da] rounded-[4px] py-2 pl-[8px] mt-1' placeholder='Enter Your Name' type="text" />
+                                <input className='w-full outline-none border-[1.2px] border-[#ced4da] rounded-[4px] py-2 pl-[8px] mt-1' placeholder='Enter Your Name' type="text" defaultValue={userDetails?.name} readOnly />
                             </div>
                             <div>
                                 <p className='pl-[5px]'>Your Mobile Number</p>
-                                <input className='w-full outline-none border-[1.2px] border-[#ced4da] rounded-[4px] py-2 pl-[8px] mt-1' placeholder='Enter Your Mobile Number' type="text" />
+                                <input className='w-full outline-none border-[1.2px] border-[#ced4da] rounded-[4px] py-2 pl-[8px] mt-1' placeholder='Enter Your Mobile Number' type="text" defaultValue={userDetails?.mobileNumber} readOnly />
                             </div>
                             <div>
                                 <p className='pl-[5px]'>Your Full Address</p>
-                                <input className='w-full outline-none border-[1.2px] border-[#ced4da] rounded-[4px] py-2 pl-[8px] mt-1' placeholder='Enter Your Full Address' type="text" />
+                                <textarea className='w-full outline-none border-[1.2px] border-[#ced4da] rounded-[4px] py-2 pl-[8px] mt-1' placeholder='Enter Your Full Address' type="text" defaultValue={userDetails?.address} readOnly />
                             </div>
                             <div className=''>
-                                <p className='pl-[5px]'>Delivery charge:</p>
+                                <p className='pl-[5px]'>Delivery charge: <span className="text-xs text-orange-600">Please select your area charge</span></p>
                                 <p ><select className='w-full outline-none border-[1.2px] border-[#ced4da] rounded-[4px] py-3 pl-[8px] mt-1' name='select' onClick={handleChange} id="select">
                                     <option value="DJI">Inside Dhaka (60 Tk.)</option>
                                     <option value="Parrot">Outside Dhaka (120 Tk.)</option>
                                 </select></p>
                             </div>
                             <input type="submit" value="Order Now" className='w-full py-3 bg-orange-500 rounded-[3px] cursor-pointer' />
-                            {/* <button className='w-full py-3 bg-orange-500 rounded-[3px]'></button> */}
+                            <Link className="text-xs" to="/myAccount">To change your address & details please go to <span className="text-orange-600">My Account</span> page</Link>
                         </section>
                     </section>
                     <section className='md:w-[50%] bg-white md:p-4 md:pt-0 py-4 md:py-0'>

@@ -18,6 +18,8 @@ const Searchbar = () => {
       window.removeEventListener("scroll", handleScrolling);
     };
   }, []);
+
+  
   return (
     <>
       <div
@@ -29,6 +31,13 @@ const Searchbar = () => {
           placeholder="search here..."
           className="w-full bg-white rounded-md border border-primaryColor1 outline-2 outline-primaryColor1 px-2 py-[5px] "
         />
+        {/* {suggestions.length > 0 && (
+          <ul>
+            {suggestions.map((suggestion) => (
+              <li key={suggestion._id}>{suggestion.name}</li>
+            ))}
+          </ul>
+        )} */}
       </div>
     </>
   );

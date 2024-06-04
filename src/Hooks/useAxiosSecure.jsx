@@ -9,7 +9,7 @@ const useAxiosSecure = () => {
     })
 
     axiosSecure.interceptors.request.use(function (config) {
-        const token = sessionStorage.getItem('userToken');
+        const token = sessionStorage.getItem('access_token');
         console.log(token);
         config.headers.authorization = `Bearer ${token}`
         return config;
@@ -26,10 +26,10 @@ const useAxiosSecure = () => {
     }, async function (error) {
         const status = error.response?.status;
         console.log(error.response);
-        // if (status) {
-        //     await logOut()
-        //     navigate('/login')
-        // }
+        if (status) {
+            await logOut()
+            navigate('/login')
+        }
         return Promise.reject(error);
     });
 
