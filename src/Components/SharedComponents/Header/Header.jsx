@@ -167,7 +167,6 @@ const Header = () => {
                   <ul tabIndex={0} className="dropdown-content opacity-0 hidden absolute z-[1] right-0 menu p-2 shadow bg-white rounded-box w-52 text-gray-500">
                     <li className="hover:text-orange-600 hover:underline"><Link to="/addToCart">My Order</Link></li>
                     <li className="hover:text-orange-600 hover:underline"><Link to="/myAccount">My Account</Link></li>
-                    <li className="hover:text-orange-600 hover:underline"><Link>My Order</Link></li>
                     <li className="hover:text-orange-600 hover:underline"><button onClick={handleLogOut}>Logout</button></li>
                   </ul>
                 </div>
