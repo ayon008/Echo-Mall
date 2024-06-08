@@ -8,10 +8,25 @@ import Loader from '../Loader/Loader';
 import Swal from 'sweetalert2';
 
 const Chackout = () => {
+
   const data = useLoaderData();
   const { _id, Product_Name, Description, Brand_Name, Product_Code, Price, Price_Without_Discount, Available_Size, Color_Variants, Commission, Product_Description, Doc_1_PC, Doc_2_PC, Doc_3_PC } = data;
+
   const axiosSecure = useAxiosSecure();
   const { user } = useContext(AuthContext);
+  const [quantity, setQuantity] = useState(1);
+  const handleIncrement = () => {
+    setQuantity(quantity + 1);
+  };
+
+  const handleDecrement = () => {
+    if (quantity > 1) {
+      setQuantity(quantity - 1);
+    }
+  };
+
+  const cardData = { _id, Product_Name, Description, Brand_Name, Product_Code, Price, Price_Without_Discount, Available_Size, Color_Variants, Commission, Product_Description, Doc_1_PC, Doc_2_PC, Doc_3_PC, quantity, email: user?.email };
+  console.log(cardData);
 
   const [loading, setLoading] = useState(false);
   if (loading) {
@@ -22,7 +37,8 @@ const Chackout = () => {
 
   const handleAddToCart = () => {
     setLoading(true);
-    axiosSecure.post('/ProductAddToCart', { ...data, email: user?.email })
+    console.log(cardData);
+    axiosSecure.post('/ProductAddToCart', cardData)
       .then(response => {
         console.log(response);
         if (response.data.insertedId || response.data.modifiedCount) {
@@ -79,13 +95,13 @@ const Chackout = () => {
               <p className="text-[13px]"><span className="line-through text-slate-400">ট{Price_Without_Discount && Price_Without_Discount} </span><span className="pl-1"> -{Commission}%</span> </p>
             </div>
             <div class="">
-              <span class="text-[25px] bg-[#eff0f5] text-[#9e9e9e] cursor-pointer px-2">-</span>
-              <input className='text-center w-[10%] mx-3' type="text" value="1" />
-              <span class="text-[25px] bg-[#eff0f5] text-[#9e9e9e] cursor-pointer px-1">+</span>
+              <span class="text-[25px] bg-[#eff0f5] text-[#9e9e9e] cursor-pointer px-2 btn" onClick={handleDecrement}>-</span>
+              <input className='text-center w-[10%] mx-3' type="text" value={quantity} />
+              <span class="text-[25px] bg-[#eff0f5] text-[#9e9e9e] cursor-pointer px-1 btn" onClick={handleIncrement}>+</span>
             </div>
 
             <div className='flex gap-x-3 pt-6'>
-              <Link to={`/shipping/${_id}`}><button className='text-white bg-[#2abbe8] md:px-[87px] px-[29px] md:py-[9.5px] py-[8px] rounded-[1.8px] hover:scale-105 duration-50000 transition-all'>Buy Now</button></Link>
+              <Link to={`/shipping/${_id}`} state={{ quantity }}><button className='text-white bg-[#2abbe8] md:px-[87px] px-[29px] md:py-[9.5px] py-[8px] rounded-[1.8px] hover:scale-105 duration-50000 transition-all'>Buy Now</button></Link>
               <button onClick={handleAddToCart} className='text-white bg-[#f57224] md:px-[87px] px-[22px] md:py-[9.5px] py-[8px] rounded-[1.8px] hover:scale-105 duration-50000 transition-all'>Add To Cart</button>
             </div>
           </div>

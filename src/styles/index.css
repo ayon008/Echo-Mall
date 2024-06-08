@@ -71,3 +71,13 @@ html {
 .grid-cols-custom-2 {
   grid-template-columns: 3fr 1fr;
 }
+
+
+input:disabled {
+  background-color: #f5c6cb;
+  /* Light red background */
+  color: #721c24;
+  /* Dark red text */
+  border: 1px solid #f5c6cb;
+  /* Border matching background */
+}

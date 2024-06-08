@@ -15,6 +15,7 @@ import AddToCart from "../../Components/AddToCart/AddToCart";
 import Buy_All from "../../Components/Buy_Now/Buy_All";
 import MyAccount from "../../Components/MyAccount/MyAccount";
 import Payment from "../../Components/Payment/Payment";
+import MyOrders from "../../Components/MyAccount/MyOrders";
 
 export const router = createBrowserRouter([
   {
@@ -66,6 +67,10 @@ export const router = createBrowserRouter([
       {
         path: '/addToCart',
         element: <PrivateRoute><AddToCart /></PrivateRoute>,
+      },
+      {
+        path: '/myOrders',
+        element: <PrivateRoute><MyOrders /></PrivateRoute>,
       },
       {
         path: '/myAccount',

@@ -6,7 +6,7 @@ import { useContext, useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
 import { AuthContext } from '../../Contexts/AuthProvider';
 
-const Container = ({ singlePrice }) => {
+const Container = ({ singlePrice, data }) => {
     const [error, setError] = useState('');
     const [clientSecret, setClientSecret] = useState('')
     const [transactionId, setTransactionId] = useState('');
@@ -23,7 +23,6 @@ const Container = ({ singlePrice }) => {
     const location = useLocation();
     const pathName = location?.pathname;
     const payableAmount = pathName === '/shipping' ? totalPrice : singlePrice;
-    console.log(payableAmount);
 
     useEffect(() => {
         if (totalPrice > 0 || singlePrice > 0) {
@@ -74,6 +73,7 @@ const Container = ({ singlePrice }) => {
             }
         })
 
+
         if (confirmError) {
             console.log('confirm error')
         }
@@ -88,11 +88,11 @@ const Container = ({ singlePrice }) => {
                 // now save the payment in the database
                 const payment = {
                     email: user.email,
-                    price: totalPrice,
+                    price: payableAmount,
                     transactionId: paymentIntent.id,
                     date: new Date(), // utc date convert. use moment js to 
-                    cartIds: cart.map(item => item._id),
-                    status: 'pending'
+                    products: pathName === '/shipping' ? cart : [data],
+                    status: 'confirmed'
                 }
 
                 const res = await axiosSecure.post('/payments', payment);
