@@ -16,6 +16,7 @@ import Buy_All from "../../Components/Buy_Now/Buy_All";
 import MyAccount from "../../Components/MyAccount/MyAccount";
 import Payment from "../../Components/Payment/Payment";
 import MyOrders from "../../Components/MyAccount/MyOrders";
+import AddReview from "../../Components/AddReview/AddReview";
 
 export const router = createBrowserRouter([
   {
@@ -79,6 +80,11 @@ export const router = createBrowserRouter([
       {
         path: '/payments',
         element: <PrivateRoute><Payment /></PrivateRoute>
+      },
+      {
+        path: '/addReview/:id',
+        element: <PrivateRoute><AddReview /></PrivateRoute>,
+        loader: ({ params }) => fetch(`${import.meta.env.VITE_DataHost}/data/${params.id}`)
       }
     ],
   },

@@ -3,6 +3,7 @@ import useAxiosSecure from '../../Hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
 import { AuthContext } from '../../Contexts/AuthProvider';
 import Loader from '../Loader/Loader';
+import { useNavigate } from 'react-router-dom';
 
 const MyOrders = () => {
     const axiosSecure = useAxiosSecure();
@@ -12,11 +13,12 @@ const MyOrders = () => {
         queryFn: () =>
             axiosSecure.get(`/payments?email=${user.email}`)
                 .then(response => {
-                    console.log(response.data);
                     return response.data;
                 })
     })
-    console.log(payments);
+
+    const navigate = useNavigate();
+
     if (isLoading) {
         return <Loader />
     }
@@ -71,6 +73,7 @@ const MyOrders = () => {
                                                         <td>confirmed</td>
                                                         <td>pending</td>
                                                         <td>{id}</td>
+                                                        <td><button onClick={() => navigate(`/addReview/${product._id}`)} className='btn text-white bg-orange-600 hover:text-orange-600 hover:bg-white hover:border-orange-600'>Add Review</button></td>
                                                     </tr>
                                                 )
                                             })
