@@ -3,14 +3,14 @@ import { FaTrash } from 'react-icons/fa';
 import useAxiosSecure from '../../Hooks/useAxiosSecure';
 import Swal from 'sweetalert2';
 import Loader from '../Loader/Loader';
+import useAxiosPublic from '../../Hooks/useAxiosPublic';
 
 const CartProducts = ({ cartItem, refetch }) => {
     const { _id, Product_Name, Description, Brand_Name, Product_Code, Price, Price_Without_Discount, Available_Size, Color_Variants, Commission, Product_Description, Doc_1_PC, Doc_2_PC, Doc_3_PC, quantity } = cartItem;
     const axiosSecure = useAxiosSecure();
-    console.log(cartItem);
     const [value, setValue] = useState(quantity);
     const [loading, setLoading] = useState(false);
-
+    
     const handleIncrement = () => {
         setValue(value + 1);
     };

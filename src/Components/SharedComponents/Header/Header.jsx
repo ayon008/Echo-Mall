@@ -52,7 +52,7 @@ const Header = () => {
 
   return (
     <>
-      <div className=" flex items-center md:hidden justify-between px-3">
+      <div className=" flex items-center md:hidden justify-between px-3 bg-orange-600">
         <Link to="/">
           <div className="">
             <img src={logo} alt="logo" className="w-[35px] h-[25px]" />
@@ -63,7 +63,7 @@ const Header = () => {
         </div>
         <div className="pr-2">
           {" "}
-          <FiShoppingCart className="text-[18px]  text-[#f85606] hover:bg-black/10  cursor-pointer rounded-md" />
+          <FiShoppingCart onClick={() => navigate('/addToCart')} color="white" className="text-[18px]  text-[#f85606] hover:bg-black/10  cursor-pointer rounded-md" />
         </div>
         {/* ---- */}
         <div>
@@ -76,8 +76,6 @@ const Header = () => {
                 className="rounded-full-ex cursor-pointer "
                 onClick={toggleDropdown}
               />
-
-              <button onClick={handleLogOut}>Logout</button>
             </div>
           ) : (
             <img
@@ -93,9 +91,9 @@ const Header = () => {
               <ul className="space-y-2">
                 {user ? (
                   <>
-                    <li className="pt-2">
-                      <Link to="/profile">Profile</Link>
-                    </li>
+                    <li className="hover:text-orange-600 hover:underline"><Link to="/myOrders">My Orders</Link></li>
+                    <li className="hover:text-orange-600 hover:underline"><Link to="/myAccount">My Account</Link></li>
+                    <li className="hover:text-orange-600 hover:underline"><button onClick={handleLogOut}>Logout</button></li>
                   </>
                 ) : (
                   <>
@@ -166,7 +164,6 @@ const Header = () => {
                   </div>
                   <ul tabIndex={0} className="dropdown-content opacity-0 hidden absolute z-[1] right-0 menu p-2 shadow bg-white rounded-box w-52 text-gray-500">
                     <li className="hover:text-orange-600 hover:underline"><Link to="/myOrders">My Orders</Link></li>
-                    <li className="hover:text-orange-600 hover:underline"><Link to="/myOrders">My Reviews</Link></li>
                     <li className="hover:text-orange-600 hover:underline"><Link to="/myAccount">My Account</Link></li>
                     <li className="hover:text-orange-600 hover:underline"><button onClick={handleLogOut}>Logout</button></li>
                   </ul>

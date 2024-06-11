@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 const useAxiosSecure = () => {
     const navigate = useNavigate();
     const axiosSecure = axios.create({
-        baseURL: 'http://localhost:5000',
+        baseURL: 'https://echo-mall-server.vercel.app',
     })
 
     axiosSecure.interceptors.request.use(function (config) {

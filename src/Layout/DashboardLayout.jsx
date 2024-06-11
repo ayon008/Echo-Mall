@@ -10,7 +10,7 @@ const DashboardLayout = () => {
   const [RoleModel, setRoleModel] = useState(false);
 
   useEffect(() => {
-    setRoleModel(usersData[0]?.role === "admin");
+    setRoleModel(usersData[0]?.role !== "admin");
   }, [usersData]);
 
   useEffect(() => {

@@ -28,8 +28,9 @@ const AddReview = () => {
             alert('Please add ratings');
             return
         }
-        axiosSecure.post(`/review/${_id}`, { ...data, value, email: user?.email, _id: _id })
+        axiosSecure.post(`/review/${_id}`, { ...data, value, email: user?.email, id: _id, name: user?.displayName })
             .then(response => {
+                console.log(response.data);
                 reset();
                 Swal.fire({
                     position: "Center",

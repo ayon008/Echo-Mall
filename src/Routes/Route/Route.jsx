@@ -17,6 +17,10 @@ import MyAccount from "../../Components/MyAccount/MyAccount";
 import Payment from "../../Components/Payment/Payment";
 import MyOrders from "../../Components/MyAccount/MyOrders";
 import AddReview from "../../Components/AddReview/AddReview";
+import ActiveOrders from "../../Components/Admin/ActiveOrders";
+import Dashboard from "../../Dashboard/Dashboard";
+import AllProducts from "../../Components/Admin/AllProducts";
+import UpdateProduct from "../../Components/Admin/UpdateProduct";
 
 export const router = createBrowserRouter([
   {
@@ -95,5 +99,24 @@ export const router = createBrowserRouter([
         <DashboardLayout></DashboardLayout>
       </PrivateRoute>
     ),
+    children: [
+      {
+        path: "/dashboard",
+        element: <PrivateRoute><Dashboard></Dashboard></PrivateRoute>
+      },
+      {
+        path: "manageProducts",
+        element: <PrivateRoute><ActiveOrders></ActiveOrders></PrivateRoute>
+      },
+      {
+        path: "allProducts",
+        element: <PrivateRoute><AllProducts /></PrivateRoute>
+      },
+      {
+        path: "allProducts/:id",
+        element: <PrivateRoute><UpdateProduct /></PrivateRoute>,
+        loader: ({ params }) => fetch(`${import.meta.env.VITE_DataHost}/data/${params.id}`)
+      }
+    ]
   },
 ]);

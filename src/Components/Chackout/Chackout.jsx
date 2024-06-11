@@ -6,6 +6,10 @@ import useAxiosSecure from '../../Hooks/useAxiosSecure';
 import { AuthContext } from '../../Contexts/AuthProvider';
 import Loader from '../Loader/Loader';
 import Swal from 'sweetalert2';
+import { useQuery } from '@tanstack/react-query';
+import Rating from 'react-rating';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStar } from '@fortawesome/free-solid-svg-icons';
 
 const Chackout = () => {
 
@@ -27,6 +31,20 @@ const Chackout = () => {
 
   const cardData = { _id, Product_Name, Description, Brand_Name, Product_Code, Price, Price_Without_Discount, Available_Size, Color_Variants, Commission, Product_Description, Doc_1_PC, Doc_2_PC, Doc_3_PC, quantity, email: user?.email };
   console.log(cardData);
+
+  const { data: review = [], isPending, isLoading, refetch } = useQuery({
+    queryKey: ['review'],
+    queryFn: () =>
+      axiosSecure.get(`/review/${_id}`)
+        .then(response => {
+          console.log(response.data);
+          return response.data;
+        })
+  })
+
+  console.log(review);
+
+
 
   const [loading, setLoading] = useState(false);
   if (loading) {
@@ -105,6 +123,30 @@ const Chackout = () => {
               <button onClick={handleAddToCart} className='text-white bg-[#f57224] md:px-[87px] px-[22px] md:py-[9.5px] py-[8px] rounded-[1.8px] hover:scale-105 duration-50000 transition-all'>Add To Cart</button>
             </div>
           </div>
+        </div>
+      </section>
+      <section>
+        <div className='my-10'>
+          <h4 className='text-orange-600 text-3xl font-bold my-10'>Reviews & Ratings</h4>
+          {
+            review.length > 0 ?
+              <>
+                {
+                  review.map(r => {
+                    return (
+                      <div className='p-4'>
+                        <p>{r.name}</p>
+                        <Rating readonly initialRating={r.value} emptySymbol={<FontAwesomeIcon icon={faStar} color="#ccc" />}
+                          fullSymbol={<FontAwesomeIcon icon={faStar} color="#FFD700" />} />
+                        <p>{r.review}</p>
+                      </div>
+                    )
+                  })
+                }
+              </>
+              :
+              <p>No Review</p>
+          }
         </div>
       </section>
     </section>

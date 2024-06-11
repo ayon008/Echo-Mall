@@ -91,8 +91,8 @@ const Container = ({ singlePrice, data }) => {
                     price: payableAmount,
                     transactionId: paymentIntent.id,
                     date: new Date(), // utc date convert. use moment js to 
-                    products: pathName === '/shipping' ? cart : [data],
-                    status: 'confirmed'
+                    products: pathName === '/shipping' ? cart.map(cartItem => ({ ...cartItem, deliveryStatus: false, reviewStatus: false })) : [data].map(cartItem => ({ ...cartItem, deliveryStatus: false, reviewStatus: false })),
+                    status: 'confirmed',
                 }
 
                 const res = await axiosSecure.post('/payments', payment);

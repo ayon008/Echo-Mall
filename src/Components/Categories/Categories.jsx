@@ -24,7 +24,7 @@ const Categories = () => {
             <h1 className="text-center text-3xl font-bold text-primaryColor1 capitalize my-4">
                 Categories
             </h1>
-            <div className="grid grid-cols-7 w-full gap-0">
+            <div className="grid md:grid-cols-7 grid-cols-3 w-full gap-0">
                 {
                     !isLoading ?
                         <>

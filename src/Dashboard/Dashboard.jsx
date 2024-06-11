@@ -1,14 +1,17 @@
 import axios from 'axios';
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import Loader from '../Components/Loader/Loader';
+import Swal from 'sweetalert2';
 const Dashboard = () => {
+  const [loader, setLoader] = useState(false);
   const { register, handleSubmit, reset } = useForm();
   const onSubmit = async (data) => {
+    setLoader(true);
     try {
       if (data.Doc_1_PC[0]) {
         const formData = new FormData();
         formData.append("image", data.Doc_1_PC[0]);
-
         // Upload the image to ImgBB using axios
         const response = await axios.post(
           "https://api.imgbb.com/1/upload",
@@ -74,62 +77,17 @@ const Dashboard = () => {
         data.Doc_3_PC = ""
 
       }
-      // if (data.Doc_3_PC[0]) {
-      //   const formData = new FormData();
-      //   formData.append("image", data.Doc_3_PC[0]);
-
-      //   // Upload the image to ImgBB using axios
-      //   const response = await axios.post(
-      //     "https://api.imgbb.com/1/upload",
-      //     formData,
-      //     {
-      //       params: {
-      //         key: "9a38563b80c5197bc652b9f720cb5b06",
-      //       },
-      //     }
-      //   );
-
-      //   // Update the data with the uploaded image URL
-      //   data.Doc_3_PC = response.data.data.url;
-      //   // console.log(response);
-      // } else {
-
-      //   data.Doc_3_PC = ""
-
-      // }
-      // if (data.Doc_4_PC[0]) {
-      //   const formData = new FormData();
-      //   formData.append("image", data.Doc_4_PC[0]);
-
-      //   // Upload the image to ImgBB using axios
-      //   const response = await axios.post(
-      //     "https://api.imgbb.com/1/upload",
-      //     formData,
-      //     {
-      //       params: {
-      //         key: "9a38563b80c5197bc652b9f720cb5b06",
-      //       },
-      //     }
-      //   );
-
-      //   // Update the data with the uploaded image URL
-      //   data.Doc_4_PC = response.data.data.url;
-      //   // console.log(response);
-      // } else {
-
-      //   data.Doc_4_PC = ""
-
-      // }
-
-
-
-      // console.log({ data });
-
-      // Make the axios POST request
       axios.post(`${import.meta.env.VITE_DataHost}/data`, data)
         .then((result) => {
           if (result.data.insertedId) {
-            alert("New Product Added Successfully !!!", { autoClose: 2000 });
+            setLoader(false)
+            Swal.fire({
+              position: "center",
+              icon: "success",
+              title: "Added",
+              showConfirmButton: false,
+              timer: 1500
+          });
             reset();
           }
         })
@@ -142,9 +100,14 @@ const Dashboard = () => {
   };
 
 
+  if (loader) {
+    return <Loader />
+  }
+
   return (
     <>
       <div>
+        <h3 className="text-center text-3xl mt-20">Add Product</h3>
         <form onSubmit={handleSubmit(onSubmit)} className="max-w-[800px] bg-slate-100 bg-gradient-to-r from-[#460eef] to-[#8d94d6] text-white mx-auto my-20 border-2 p-4 rounded-md shadow-md">
           {/* <DashboardInfoText title={'Add New Product'} /> */}
           <div className='flex gap-x-4'>
@@ -172,6 +135,30 @@ const Dashboard = () => {
                   className="form-input w-full  bg-[#fff] text-slate-600 py-3 rounded-md"
 
                 />
+              </div>
+              <div className="...">
+                <label className="block mb-1 font-medium">
+                  Category
+                </label>
+                <select
+                  {...register('category', { required: 'This field is required' })}
+                  className="select select-bordered w-full text-black"
+                >
+                  <option value="Smartwatches">Smartwatches</option>
+                  <option value="Electronics">Electronics</option>
+                  <option value="Cables and Converters">Cables and Converters</option>
+                  <option value="Wall Charger">Wall Charger</option>
+                  <option value="Wardrove Organizer">Wardrove Organizer</option>
+                  <option value="Trimmers">Trimmers</option>
+                  <option value="Chinos">Chinos</option>
+                  <option value="Art & Craft">Art & Craft</option>
+                  <option value="T-Shirt">T-Shirt</option>
+                  <option value="Books & Stationery">Books & Stationery</option>
+                  <option value="Musical Instruments">Musical Instruments</option>
+                  <option value="Office Supplies">Office Supplies</option>
+                  <option value="Jewelry & Watches">Jewelry & Watches</option>
+                  <option value="Fashion">Fashion</option>
+                </select>
               </div>
 
               <div className="...">
