@@ -41,7 +41,7 @@ const AddToCart = () => {
             {
                 length > 0
                     ?
-                    <div className="grid md:grid-cols-custom-2 grid-cols-1 gap-6 md:p-10 p-2">
+                    <div className="md:grid grid-cols-custom-2 gap-6 md:p-10 p-2">
                         <div>
                             {
                                 cart?.map(cartItem => {
